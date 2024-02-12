@@ -11,6 +11,7 @@ const Control: React.FC<Props> = ({ activeSize, setSize }) => {
           key={size}
           disabled={activeSize === size}
           onClick={() => setSize(size)}
+          className="control__button"
         >
           {size}
         </button>

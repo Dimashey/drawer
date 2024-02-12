@@ -1,0 +1,13 @@
+.app {
+  max-width: 900px;
+  margin: 50px auto 0 auto;
+}
+
+.app > div {
+  margin-bottom: 20px;
+}
+
+.app__control {
+  width: 70%;
+  margin: 0 auto;
+}
