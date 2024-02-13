@@ -24,7 +24,7 @@ function App() {
         />
       </div>
       <div>
-        <Drawer activeSize={size} addLine={add} lines={list} />
+        <Drawer activeSize={size} addLine={add} lines={list} lineType={type} />
       </div>
       <div>
         <Lines lines={list} />

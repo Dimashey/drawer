@@ -6,9 +6,10 @@ import {
   SIZE_PROPERTIES,
 } from "./constants";
 import { Props } from "./type";
-import useLineDrawer, { drawLine } from "../../hooks/useLineDrawer";
+import useLineDrawer from "../../hooks/useLineDrawer";
+import { drawLine } from "../../utils/draw";
 
-const Drawer: React.FC<Props> = ({ activeSize, addLine, lines }) => {
+const Drawer: React.FC<Props> = ({ activeSize, addLine, lines, lineType }) => {
   const style = SIZE_PROPERTIES[activeSize];
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -16,6 +17,7 @@ const Drawer: React.FC<Props> = ({ activeSize, addLine, lines }) => {
   const { startDrawing, draw, endDrawing, startPoint, endPoint } =
     useLineDrawer({
       canvasRef,
+      lineType,
     });
 
   const mouseMoveHandler = (

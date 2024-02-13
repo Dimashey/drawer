@@ -1,8 +1,10 @@
 import React, { RefObject } from "react";
 import { Coordinates } from "../../components/Drawer/type";
+import { LineType } from "../../constants/sizes";
 
 export type Params = {
   canvasRef: RefObject<HTMLCanvasElement>;
+  lineType: LineType;
 };
 
 export type Return = {

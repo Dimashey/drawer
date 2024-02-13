@@ -1,6 +1,6 @@
 import React from "react";
 import { Coordinates } from "../../components/Drawer/type";
-import { drawLine } from "../../hooks/useLineDrawer";
+import { drawLine } from "../../utils/draw";
 
 export abstract class LineDrawer {
   canvas: HTMLCanvasElement;

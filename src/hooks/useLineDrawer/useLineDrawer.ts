@@ -1,41 +1,54 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Coordinates } from "../../components/Drawer/type";
-import { drawLine, getMousePosition } from "./utils";
 import { Params, Return } from "./types";
+import { LineDrawer } from "../../services/drawer/line";
+import { DirectLineDrawer } from "../../services/drawer/direct-line";
+import { LineType } from "../../constants/sizes";
+import { ParallelLineDrawer } from "../../services/drawer/parallel-line";
 
-const useLineDrawer = ({ canvasRef }: Params): Return => {
-  const [isDrawing, setIsDrawing] = useState<boolean>(false);
+const useLineDrawer = ({ canvasRef, lineType }: Params): Return => {
   const [startPoint, setStartPoint] = useState<Coordinates | null>(null);
   const [endPoint, setEndPoint] = useState<Coordinates | null>(null);
+  const drawerRef = useRef<LineDrawer | null>(null);
+
+  const getDrawer = (
+    canvas: HTMLCanvasElement,
+    context: CanvasRenderingContext2D,
+  ) => {
+    if (lineType === LineType.Parallel) {
+      return new ParallelLineDrawer(canvas, context);
+    }
+
+    return new DirectLineDrawer(canvas, context);
+  };
 
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-    setIsDrawing(true);
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { x, y } = getMousePosition(e, canvas);
-    setStartPoint({ x, y });
+
+    const drawer = getDrawer(canvas, ctx);
+
+    drawerRef.current = drawer;
+
+    const coordinates = drawer.setStartMousePosition(e);
+
+    setStartPoint(coordinates);
   };
 
   const draw = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-    if (!isDrawing || !startPoint) return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    const { x, y } = getMousePosition(e, canvas);
+    const drawer = drawerRef.current;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
+    if (!drawer) return;
 
-    drawLine(ctx, startPoint.x, startPoint.y, x, y);
+    const coordinates = drawer.draw(e);
 
-    setEndPoint({ x, y });
+    setEndPoint(coordinates);
   };
 
   const endDrawing = () => {
-    setIsDrawing(false);
+    drawerRef.current = null;
     setStartPoint(null);
   };
 

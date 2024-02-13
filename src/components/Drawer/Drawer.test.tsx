@@ -1,15 +1,26 @@
 import { render, screen } from "@testing-library/react";
 import Drawer from "./Drawer";
 import { Props } from "./type";
-import { Size } from "../../constants/sizes";
-import { CSSProperties } from "react";
+import { LineType, Size } from "../../constants/sizes";
 
-const component = ({ activeSize, lines, addLine }: Props) =>
-  render(<Drawer lines={lines} addLine={addLine} activeSize={activeSize} />);
+const component = ({ activeSize, lines, addLine, lineType }: Props) =>
+  render(
+    <Drawer
+      lines={lines}
+      addLine={addLine}
+      activeSize={activeSize}
+      lineType={lineType}
+    />,
+  );
 
 describe("<Drawer />", () => {
   it("should render correctly", () => {
-    component({ activeSize: Size.Small, lines: [], addLine: jest.fn() });
+    component({
+      activeSize: Size.Small,
+      lines: [],
+      addLine: jest.fn(),
+      lineType: LineType.Direct,
+    });
 
     const drawer = screen.getByTestId<HTMLCanvasElement>("drawer");
     expect(drawer).toBeInTheDocument();
@@ -19,7 +30,12 @@ describe("<Drawer />", () => {
 
   describe("handle sizes", () => {
     it("should render small size", () => {
-      component({ activeSize: Size.Small, lines: [], addLine: jest.fn() });
+      component({
+        activeSize: Size.Small,
+        lines: [],
+        addLine: jest.fn(),
+        lineType: LineType.Direct,
+      });
 
       const drawer = screen.getByTestId<HTMLCanvasElement>("drawer");
       expect(drawer.style.width).toEqual("300px");
@@ -27,7 +43,12 @@ describe("<Drawer />", () => {
     });
 
     it("should render medium size", () => {
-      component({ activeSize: Size.Medium, lines: [], addLine: jest.fn() });
+      component({
+        activeSize: Size.Medium,
+        lines: [],
+        addLine: jest.fn(),
+        lineType: LineType.Direct,
+      });
 
       const drawer = screen.getByTestId<HTMLCanvasElement>("drawer");
       expect(drawer.style.width).toEqual("600px");
@@ -35,7 +56,12 @@ describe("<Drawer />", () => {
     });
 
     it("should render large size", () => {
-      component({ activeSize: Size.Large, lines: [], addLine: jest.fn() });
+      component({
+        activeSize: Size.Large,
+        lines: [],
+        addLine: jest.fn(),
+        lineType: LineType.Direct,
+      });
 
       const drawer = screen.getByTestId<HTMLCanvasElement>("drawer");
       expect(drawer.style.width).toEqual("900px");
