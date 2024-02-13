@@ -2,6 +2,17 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Instruction to start project
+
+1. Install dependencies by running `yarn`
+2. Start project `yarn start`
+
+### Dependencies
+To start project correctly, you should have
+
+1. Node.js v18 on local machine
+2. yarn package manager
+
 ## Available Scripts
 
 In the project directory, you can run:
